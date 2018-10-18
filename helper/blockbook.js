@@ -38,7 +38,7 @@ const getAllFees = (url) => {
           a.push([block, fee]);
         }
         return a;
-      }, []);
+      }, []).reverse();
 
       resolve(feeArr);
     });
