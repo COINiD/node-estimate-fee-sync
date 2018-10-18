@@ -1,6 +1,16 @@
 
 const fs = require('fs');
+const path = require('path');
+const process = require('process');
 const getBlockBookFee = require('./helper/blockbook');
+
+let argPath = process.argv[2] || process.cwd();
+const exportPath = path.normalize(argPath);
+
+if(!fs.existsSync(exportPath)) {
+  console.error('Path does not exist');
+  process.exit();
+}
 
 const coinsArr = [
   {coin: 'bitcoin', getFee: getBlockBookFee('wss://btc-blockbook1.coinid.org')},
@@ -12,11 +22,8 @@ const coinsArr = [
 const pArr = coinsArr.map(({coin, getFee}) => {
   return getFee()
   .then((feeArr) => {
-    if(!fs.existsSync('./export')) {
-      fs.mkdirSync('./export');
-    }
-    const file = `./export/${coin}.json`;
-    fs.writeFileSync(`./export/${coin}.json`, JSON.stringify({data: feeArr}));
+    const file = `${exportPath}/${coin}.json`;
+    fs.writeFileSync(file, JSON.stringify({data: feeArr}));
 
     console.log(`Wrote file ${file}`);
     return { coin, file}
