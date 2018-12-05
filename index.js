@@ -16,7 +16,8 @@ const coinsArr = [
   {coin: 'bitcoin', getFee: getBlockBookFee('wss://btc-blockbook1.coinid.org')},
   {coin: 'testnet', getFee: getBlockBookFee('wss://testnet-blockbook1.coinid.org')},
   {coin: 'myriad', getFee: getBlockBookFee('wss://xmy-blockbook1.coinid.org')},
-  {coin: 'groestlcoin', getFee: getBlockBookFee('wss://blockbook.groestlcoin.org:9145')},
+  {coin: 'groestlcoin', getFee: getBlockBookFee('wss://blockbook.groestlcoin.org')},
+  {coin: 'groestlcoin-testnet', getFee: getBlockBookFee('wss://blockbook-test.groestlcoin.org')},
 ];
 
 const pArr = coinsArr.map(({coin, getFee}) => {
