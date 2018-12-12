@@ -1,6 +1,6 @@
 const io = require('socket.io-client');
 
-const getAllFees = (url) => {
+const getAllFees = ({url, minimumSatFee=1}) => {
   const socket = io(url, { transports: ['websocket'], rejectUnauthorized: false });
 
   const getFee = (blocks) => {
@@ -8,7 +8,10 @@ const getAllFees = (url) => {
       const conservative = true;
       socket.send({ method: 'estimateSmartFee', params: [blocks, conservative] }, ({result}) => {
         const feeBtcPerKb = Number(result);
-        const feeSatPerByte = Math.ceil(1e8*feeBtcPerKb/1024);
+        let feeSatPerByte = Math.ceil(1e8*feeBtcPerKb/1024);
+        if (feeSatPerByte < minimumSatFee) {
+          feeSatPerByte = minimumSatFee;
+        }
         resolve([blocks, feeSatPerByte]);
       });
     });
@@ -31,7 +34,7 @@ const getAllFees = (url) => {
         if(!Number.isInteger(block) || !Number.isInteger(fee)) {
           throw('Wierd format');
         }
-          
+
         if(lastFee !== fee) {
           lastFee = fee;
 
@@ -46,5 +49,5 @@ const getAllFees = (url) => {
 }
 
 module.exports = (url) => {
-  return () => getAllFees(url);
+  return ({minimumSatFee}) => getAllFees({url, minimumSatFee});
 }
