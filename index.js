@@ -16,7 +16,7 @@ const coinsArr = [
   {coin: 'bitcoin', minimumSatFee: 1, getFee: getBlockBookFee('wss://btc-blockbook1.coinid.org')},
   {coin: 'testnet', minimumSatFee: 1, getFee: getBlockBookFee('wss://testnet-blockbook1.coinid.org')},
   {coin: 'myriad', minimumSatFee: 1, getFee: getBlockBookFee('wss://xmy-blockbook1.coinid.org')},
-  {coin: 'groestlcoin', minimumSatFee: 1, getFee: getBlockBookFee('wss://blockbook.groestlcoin.org')},
+  {coin: 'groestlcoin', minimumSatFee: 10, getFee: getBlockBookFee('wss://blockbook.groestlcoin.org')},
   {coin: 'groestlcoin-testnet', minimumSatFee: 10, getFee: getBlockBookFee('wss://blockbook-test.groestlcoin.org')},
 ];
 
